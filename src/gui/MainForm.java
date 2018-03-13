@@ -5,17 +5,52 @@
  */
 package gui;
 
+import java.awt.Font;
+import model.TextoConFormato;
+
 /**
  *
  * @author Alumnos
  */
 public class MainForm extends javax.swing.JFrame {
-
-    /**
+      private final String TEXTO_PREDET ="Instituto Tecnológico de Campeche";      
+      TextoConFormato txt;
+      
+      /**
      * Creates new form MainForm
      */
+      
+      private void actualizarVista(){
+          etiquetaTexto.setText(txt.getTexto());
+          etiquetaTexto.setFont(txt.getFont());
+      }
+      
+      private void actualizarModelo(){
+          txt.setTexto(etiquetaTexto.getText());
+          txt.setFuente((String) comboBoxFuente.getSelectedItem());
+          txt.setEstilo(Font.PLAIN);
+          if(checkBoxNegrita.isSelected()){
+              txt.setEstilo(txt.getEstilo() + Font.ITALIC);
+          }
+          if(radioButtonPequenio.isSelected()){
+              txt.setTamanio(TextoConFormato.TAMANIO_PEQUENIO);
+          }
+          else if(radioButtonMediano.isSelected()){
+              txt.setTamanio(TextoConFormato.TAMANIO_MEDIANO);
+          }
+          else {
+              txt.setTamanio(TextoConFormato.TAMANIO_GRANDE);
+          }
+      
+      }
+      
+      
     public MainForm() {
         initComponents();
+        txt= new TextoConFormato(TEXTO_PREDET);
+   
+        actualizarModelo();
+        actualizarVista();
     }
 
     /**
@@ -67,17 +102,25 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Fuente"));
 
         comboBoxFuente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "Times New Roman", "Calibri", "Verdana", "Tahoma", "Consolas" }));
+        comboBoxFuente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboBoxFuenteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(comboBoxFuente, 0, 120, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(comboBoxFuente, 0, 122, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addComponent(comboBoxFuente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -85,8 +128,18 @@ public class MainForm extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Estilo"));
 
         checkBoxNegrita.setText("Negrita");
+        checkBoxNegrita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxNegritaActionPerformed(evt);
+            }
+        });
 
         checkBoxCursiva.setText("Cursiva");
+        checkBoxCursiva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkBoxCursivaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -97,7 +150,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(checkBoxNegrita)
                     .addComponent(checkBoxCursiva))
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,12 +166,27 @@ public class MainForm extends javax.swing.JFrame {
 
         grupoTamanio.add(radioButtonPequenio);
         radioButtonPequenio.setText("Pequeño");
+        radioButtonPequenio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonPequenioActionPerformed(evt);
+            }
+        });
 
         grupoTamanio.add(radioButtonMediano);
         radioButtonMediano.setText("Mediano");
+        radioButtonMediano.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonMedianoActionPerformed(evt);
+            }
+        });
 
         grupoTamanio.add(radioButtonGrande);
         radioButtonGrande.setText("Grande");
+        radioButtonGrande.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioButtonGrandeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -129,7 +197,7 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(radioButtonPequenio)
                     .addComponent(radioButtonMediano)
                     .addComponent(radioButtonGrande))
-                .addGap(0, 48, Short.MAX_VALUE))
+                .addGap(0, 68, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,12 +220,14 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(150, 150, 150)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)))
+                        .addGap(0, 4, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -175,6 +245,38 @@ public class MainForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboBoxFuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxFuenteActionPerformed
+       actualizarModelo();
+       actualizarVista();
+
+    }//GEN-LAST:event_comboBoxFuenteActionPerformed
+
+    private void checkBoxNegritaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxNegritaActionPerformed
+        actualizarModelo();
+        actualizarVista();
+    }//GEN-LAST:event_checkBoxNegritaActionPerformed
+
+    private void checkBoxCursivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxCursivaActionPerformed
+        
+          actualizarModelo();
+          actualizarVista();
+    }//GEN-LAST:event_checkBoxCursivaActionPerformed
+
+    private void radioButtonPequenioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonPequenioActionPerformed
+        actualizarModelo();
+        actualizarVista();
+    }//GEN-LAST:event_radioButtonPequenioActionPerformed
+
+    private void radioButtonMedianoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonMedianoActionPerformed
+        actualizarModelo();
+        actualizarVista();
+    }//GEN-LAST:event_radioButtonMedianoActionPerformed
+
+    private void radioButtonGrandeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioButtonGrandeActionPerformed
+         actualizarModelo();
+         actualizarVista();
+    }//GEN-LAST:event_radioButtonGrandeActionPerformed
 
     /**
      * @param args the command line arguments
